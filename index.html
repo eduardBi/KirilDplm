@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <button>dsde</button>
     
 <script>
     
@@ -18,10 +19,13 @@ socket.addEventListener('open',(e) =>{
             x:12,
             y:15
         }
-    )
-)});
-socket.addEventListener('message',recivingData=>{
-    console.log(JSON.parse(recivingData.data))
+        
+    ))
+
+});
+let input=document.querySelector('button')
+input.addEventListener('click',recivingData=>{
+    console.log('dadad')
 })
 
 </script>

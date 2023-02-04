@@ -2,8 +2,13 @@ const Websocket=require('ws');
 const path=require('path');
 const wss= new Websocket.Server({port:8800});
 const express=require('express');
+const { copyFileSync } = require('fs');
 const app=express();
 const server=require('http').createServer(app)
+/*
+const { Server } = require("socket.io");
+const io = new Server(server);
+*/
 //импорт библиотек
 
 
@@ -20,31 +25,41 @@ const server=require('http').createServer(app)
  
 
  wss.on('connection',ws=>{
-    wss.clients.forEach(eachClient=>{
-            eachClient.send(JSON.stringify({msg:'hi'}))});
- })
+   
+         ws.onmessage = ({data}) => {
+            wss.clients.forEach(function each(client) {
+               if(JSON.parse(data).type=='openOnePost'){
+                  console.log('yes one')
+                  if (client === ws && client.readyState === Websocket.OPEN) {
+                     let idOfOpendPost=JSON.parse(data).id
+                     
+                    client.send(JSON.stringify(posts[idOfOpendPost]));
+                  }
+               }
+               if(JSON.parse(data).type=='openAllPosts'){
+                  console.log('openAllPosts')
+                  if (client === ws && client.readyState === Websocket.OPEN) {
+                    client.send(JSON.stringify( posts));
+                  }
+               }
+               if(JSON.parse(data).type=='leaveAcomment'){
+                  console.log('leaveAcomment')
+                  if (client === ws && client.readyState === Websocket.OPEN) {
+                    client.send(JSON.stringify( posts));
+                  }
+               }
+      });
+
+   }})
  //отсылает новости каждому подключённому клиенту 
 
- wss.on('connection',ws=>{
-            wss.clients.forEach(eachClient=>{
-                 eachClient.send(JSON.stringify({msg:'hi'}))
-                 
-         });
-
-           ws.on('message',message=>{
-               let showIndividualPost=JSON.parse(message).id;
-               console.log(showIndividualPost)
-               console.log(posts[showIndividualPost-1])
-               ws.send(JSON.stringify(posts[showIndividualPost-1]))
-           })
-           
-})
+ 
 //показывает каждую новость  
 
 
  app.get('/',(req,res)=>{
 
-   res.sendFile(path.join(__dirname, '../index.html'));
+   res.sendFile(path.join(__dirname, '../fullList.html'));
 
  })
 
@@ -88,8 +103,6 @@ app.post('/postcomment/:id/comments',(req,res)=>{
 
 
 
- 
-//добавляет комментарий
 
 
 
