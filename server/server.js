@@ -25,8 +25,26 @@ const server=require('http').createServer(app)
  })
  //отсылает новости каждому подключённому клиенту 
 
+ wss.on('connection',ws=>{
+            wss.clients.forEach(eachClient=>{
+                 eachClient.send(JSON.stringify({msg:'hi'}))
+                 
+         });
+
+           ws.on('message',message=>{
+               let showIndividualPost=JSON.parse(message).id;
+               console.log(showIndividualPost)
+               console.log(posts[showIndividualPost-1])
+               ws.send(JSON.stringify(posts[showIndividualPost-1]))
+           })
+           
+})
+//показывает каждую новость  
+
+
  app.get('/',(req,res)=>{
 
+   res.sendFile(path.join(__dirname, '../index.html'));
 
  })
 
@@ -35,17 +53,14 @@ const server=require('http').createServer(app)
   }));
   // исправляет ошибку "udefined"
 
-app.post('/postcomment',(req,res)=>{
+app.post('/postcomment/:id/comments',(req,res)=>{
    console.log('postedDATA', req.body);
    res.sendFile(path.join(__dirname, '../individualPost.html'));
 })
 //отправляет комментарии 
 
-app.get('/postcomment',(req,res)=>{
-   console.log('postedDATA', req.body);
-   res.sendFile(path.join(__dirname, '../individualPost.html'));
-})
-//позволяет просматривать посты 
+
+
 
   
  app.get('/adminpost',(req,res)=>{
