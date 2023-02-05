@@ -70,12 +70,10 @@ const server=require('http').createServer(app)
          }
          if(JSON.parse(data).type=='leaveAcomment'){
             
-            
-               
-               
+            if (client === ws && client.readyState === Websocket.OPEN){
                posts[JSON.parse(data).id].comments.push(JSON.parse(data).commentText)
                console.log(JSON.parse(data).id)
-               
+            }  
             
            
 
