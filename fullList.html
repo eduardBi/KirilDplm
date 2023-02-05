@@ -12,14 +12,6 @@
 
 
     
-    <form action="../postcomment" 
-    method="POST"
-    
-
-    >
-        <input type="text" name="some">
-        <input type="submit">
-    </form>
 
 
     <script>
@@ -41,7 +33,7 @@ socket.addEventListener('message',(e) =>{
           for (let i = 0; i < data.length; i++) {
               console.log(i)
 
-              document.body.innerHTML+=`<a href="./posts/${i}">${data[i].title}</a>`
+              document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/individualPost.html?${i}">${data[i].title}</a>`
 
           }
     
@@ -49,22 +41,7 @@ socket.addEventListener('message',(e) =>{
 })
     
         
-/*        
-        async function getPost(url){
-            const response = await fetch(url);
-            const posts = await response.json();
-            console.log(posts);            
-            const queryString = window.location.href
-            let parts = queryString.split('/')
-            let id = parts[parts.length-2]
-            document.querySelector('form').action=`../postcomment/${id}/comments`
-            console.log(id)
-            return posts;
-            
-        }
-        getPost('https://jsonplaceholder.typicode.com/todos/1')
-        
-*/
+
     </script>
 
 

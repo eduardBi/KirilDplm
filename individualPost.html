@@ -8,10 +8,14 @@
 </head>
 <body>
 
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
+
+    <form onsubmit="return mySubmitFunction(event)">
+        <input
+        id="input"
+        type="text">
+        <button type="submit">subsecond</button>
+      </form>
+
 
 
     
@@ -27,71 +31,78 @@
     <script>
         
 
-    let socket = new WebSocket("ws://localhost:8800/");
-
+    
+    let comments=[];
     const queryString = window.location.href
-    let parts = queryString.split('/')
+    let parts = queryString.split('?')
     let id = parts[parts.length-1]
+    console.log(id);
+    let socket = new WebSocket("ws://localhost:8800");
+    
 
     socket.addEventListener('open',(e) =>{
-        console.log('opend')
- 
+        
         socket.send(JSON.stringify({
             type:'openOnePost',
             id
         }
     )
 )});
+
+setInterval(() => {
+    socket.send(JSON.stringify({
+                    type:'seeIfCommentsUpdates',
+                    id,
+                    nummerOfcomments:comments.length,
+                }))
+
+}, 1000);
+
+
+
 socket.addEventListener('message',(e) =>{
     
         let data=JSON.parse(e.data)
-        document.body.innerHTML+=data.title
-    
+        if(data.type=='updateCommentSecton' && data.id==id){
+            comments=[...data.comments, ...comments];
+            console.log(comments)
+        }
+        
+        if(data.type=="showTitle"){
+            comments=[...data.comments, ...comments]
+            console.log(data.comments)
+            document.body.innerHTML+=data.title
+
+        
+        }
+        
 
 })
 
-
-
+    
+    let submit=document.querySelector('form')
     
 
 
+    function mySubmitFunction(e) {
+            e.preventDefault();
 
-    
+            let input =document.getElementById('input')
+            let commentText =input.value
+            if(input.value!=''){
+                socket.send(JSON.stringify({
+                    type:'leaveAcomment',
+                    id,
+                    commentText
+                }))
+                input.value='';
+            }
+            return false;
+    }
 
 
-
-   
-
-   
-   'leaveAcomment'
-   'onsubmit="event.preventDefault()"'
-    
-        
-/*        
-        async function getPost(url){
-            const response = await fetch(url);
-            const posts = await response.json();
-            console.log(posts);            
-            const queryString = window.location.href
-            let parts = queryString.split('/')
-            let id = parts[parts.length-2]
-            document.querySelector('form').action=`../postcomment/${id}/comments`
-            console.log(id)
-            return posts;
-            
-        }
-        getPost('https://jsonplaceholder.typicode.com/todos/1')
-        
-*/
     </script>
-
-
-
-<script>
-  
-</script>
-
-
     
+
 </body>
 </html>
