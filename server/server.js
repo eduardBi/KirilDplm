@@ -1,6 +1,6 @@
 const Websocket=require('ws');
 const path=require('path');
-const wss= new Websocket.Server({port:8800});
+const wss= new Websocket.Server({port:8000});
 const express=require('express');
 
 const app=express();
@@ -8,6 +8,7 @@ const server=require('http').createServer(app)
 
 
 //импорт библиотек
+
 
 
  let posts=[
@@ -22,15 +23,81 @@ const server=require('http').createServer(app)
       comments:[],
    }
  ]
+let sockets=[]
+ function putchSockets(){
+   for (let i = 0; i < posts.length; i++) {
+      let socketUrl='880'+i;
+      sockets[i]=new Websocket.Server({port:socketUrl});
+
+      sockets[i].on('connection',ws=>{
+
+         ws.onmessage = ({data}) => {
+             data=JSON.parse(data);
+             
+             sockets[data.id].clients.forEach(function each(client) {
+               if(data.type=='seeIfCommentsUpdates' && data.nummerOfcomments!=posts[data.id].comments.length){
+                  
+                  let difference=posts[data.id].comments.length-data.nummerOfcomments
+                  let putchNewComment=[];
+                  for (let i = 0; i < difference ; i++) {
+
+                     let indexOfnewComment=posts[data.id].comments.length-i-1;
+                     putchNewComment.push(posts[data.id].comments[indexOfnewComment])
+                     
+                  }
+                  console.log(difference)
+                  
+                  client.send(JSON.stringify({type:'updateCommentSecton',comments:[...putchNewComment],id:data.id}))
+                  
+                  
+               }else{
+                  
+                  console.log('leave')
+               }
+               if(data.type=='openOnePost'){
+                  
+                  if (client === ws && client.readyState === Websocket.OPEN) {
+                     let idOfOpendPost=data.id
+                     
+                    client.send(JSON.stringify({...posts[idOfOpendPost],type:'showTitle'}));
+                  }
+               }
+               if(data.type=='openAllPosts'){
+                  
+                  if (client === ws && client.readyState === Websocket.OPEN) {
+                    client.send(JSON.stringify( posts));
+                  }
+               }
+               console.log(data.type)
+               if(data.type=='leaveAcomment'){
+                  
+                  if (client === ws && client.readyState === Websocket.OPEN){
+                     posts[data.id].comments.push(data.commentText)
+                     console.log(posts[data.id].comments);
+                  }      
+      
+               }
+            }
+               
+      )};
+      
+      }
+               
+      )
+      
+   }
+}
+putchSockets()
+console.log(sockets.length)
  
  
 
 
-         let clients=[]
+let clients=[]
 
 
 
- wss.on('connection',ws=>{
+ /*wss.on('connection',ws=>{
 
    ws.onmessage = ({data}) => {
       wss.clients.forEach(function each(client) {
@@ -85,7 +152,7 @@ const server=require('http').createServer(app)
 }
          
 )
-
+*/
 
 
 

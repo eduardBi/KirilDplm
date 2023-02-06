@@ -19,14 +19,7 @@
 
 
     
-    
 
-    
-
-
-
-
-    
 
     <script>
         
@@ -37,33 +30,38 @@
     let parts = queryString.split('?')
     let id = parts[parts.length-1]
     console.log(id);
-    let socket = new WebSocket("ws://localhost:8800");
+    let soketUrl="ws://localhost:880"+id;
+    
+    
     
 
+let socket = new WebSocket(soketUrl);
+
+
     socket.addEventListener('open',(e) =>{
-        
         socket.send(JSON.stringify({
             type:'openOnePost',
             id
         }
+        
     )
-)});
+    ) });
 
-setInterval(() => {
-    socket.send(JSON.stringify({
+    setInterval(() => {
+        socket.send(JSON.stringify({
                     type:'seeIfCommentsUpdates',
                     id,
                     nummerOfcomments:comments.length,
-                }))
+    }))
 
-}, 1000);
+}, 10000);
 
 
 
 socket.addEventListener('message',(e) =>{
     
         let data=JSON.parse(e.data)
-        if(data.type=='updateCommentSecton' && data.id==id){
+        if(data.type=='updateCommentSecton'){
             comments=[...data.comments, ...comments];
             console.log(comments)
         }
@@ -78,15 +76,12 @@ socket.addEventListener('message',(e) =>{
         
 
 })
-
     
     let submit=document.querySelector('form')
     
-
-
     function mySubmitFunction(e) {
             e.preventDefault();
-
+            
             let input =document.getElementById('input')
             let commentText =input.value
             if(input.value!=''){
@@ -99,7 +94,6 @@ socket.addEventListener('message',(e) =>{
             }
             return false;
     }
-
 
     </script>
     
