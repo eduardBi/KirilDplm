@@ -7,9 +7,36 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="POST">
-        <input type="text" name="email">
-        <input type="submit">
-    </form>
+    <form onsubmit="return mySubmitFunction(event)">
+        <input
+        id="input"
+        type="text">
+        <button type="submit">subsecond</button>
+      </form>
+
+
+      <script>
+
+    let socket = new WebSocket("ws://localhost:8000/");
+        
+    function mySubmitFunction(e) {
+            e.preventDefault();
+            
+            let input =document.getElementById('input')
+            let postText =input.value
+            
+            if(input.value!=''){
+                socket.send(JSON.stringify({
+                    type:'uploadNewPost',
+                    postText
+                }
+                ))
+                input.value='';
+            }
+            return false;
+    }
+
+      </script>
+
 </body>
 </html>

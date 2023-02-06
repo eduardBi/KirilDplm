@@ -2,34 +2,68 @@ const Websocket=require('ws');
 const path=require('path');
 const wss= new Websocket.Server({port:8000});
 const express=require('express');
-
+const http=require('http');
 const app=express();
-const server=require('http').createServer(app)
+const server=require('http').createServer(app);
+
+let posts=[
+   
+   {
+      id:1,
+      title:'Kst found black whore',
+      comments:[],
+   },
+   {
+      id:2,
+      title:'Kst found black whore',
+      comments:[],
+   },
+ ]
+
+http.get('http://localhost:3000/data', res => {
+  let data = [];
+  const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
+  console.log('Status Code:', res.statusCode);
+  console.log('Date in Response header:', headerDate);
+
+  res.on('data', chunk => {
+    data.push(chunk);
+  });
+  
+
+  res.on('end', () => {
+    
+    const postsFromserver = JSON.parse(Buffer.concat(data).toString());
+    posts.push(postsFromserver[0]);
+    console.log(posts)
+  });
+  
+}).on('error', err => {
+  console.log('Error: ', err.message);
+});
+
+
+
+
+
+
 
 
 //импорт библиотек
 
 
 
- let posts=[
-   {
-      id:0,
-      title:'Kst found black hole',
-      comments:['my little comment','second'],
-   },
-   {
-      id:1,
-      title:'Kst found black whore',
-      comments:[],
-   }
- ]
+ 
 let sockets=[]
- function putchSockets(){
-   for (let i = 0; i < posts.length; i++) {
-      let socketUrl='880'+i;
-      sockets[i]=new Websocket.Server({port:socketUrl});
+ function putchSockets(post){
+   
+   for (let i = 0; i < post.length; i++) {
+      
+   
+      let socketUrl='880'+post[i].id;
+      sockets[post[i].id]=new Websocket.Server({port:socketUrl});
 
-      sockets[i].on('connection',ws=>{
+      sockets[post[i].id].on('connection',ws=>{
 
          ws.onmessage = ({data}) => {
              data=JSON.parse(data);
@@ -45,14 +79,11 @@ let sockets=[]
                      putchNewComment.push(posts[data.id].comments[indexOfnewComment])
                      
                   }
-                  console.log(difference)
+                  
                   
                   client.send(JSON.stringify({type:'updateCommentSecton',comments:[...putchNewComment],id:data.id}))
                   
                   
-               }else{
-                  
-                  console.log('leave')
                }
                if(data.type=='openOnePost'){
                   
@@ -62,13 +93,7 @@ let sockets=[]
                     client.send(JSON.stringify({...posts[idOfOpendPost],type:'showTitle'}));
                   }
                }
-               if(data.type=='openAllPosts'){
-                  
-                  if (client === ws && client.readyState === Websocket.OPEN) {
-                    client.send(JSON.stringify( posts));
-                  }
-               }
-               console.log(data.type)
+               
                if(data.type=='leaveAcomment'){
                   
                   if (client === ws && client.readyState === Websocket.OPEN){
@@ -87,76 +112,49 @@ let sockets=[]
       
    }
 }
-putchSockets()
-console.log(sockets.length)
+putchSockets(posts)
+
  
  
 
 
-let clients=[]
-
-
-
- /*wss.on('connection',ws=>{
-
+wss.on('connection',ws=>{
+   
    ws.onmessage = ({data}) => {
       wss.clients.forEach(function each(client) {
+         data=JSON.parse(data)
          
-         if(JSON.parse(data).type=='seeIfCommentsUpdates' && JSON.parse(data).nummerOfcomments!=posts[JSON.parse(data).id].comments.length){
-            let difference=posts[JSON.parse(data).id].comments.length-JSON.parse(data).nummerOfcomments
-            let putchNewComment=[]
-            for (let i = 0; i < difference ; i++) {
-               
-               
-               let indexOfnewComment=posts[JSON.parse(data).id].comments.length-i-1;
-               putchNewComment.push(posts[JSON.parse(data).id].comments[indexOfnewComment])
-               
-            }
-            console.log(difference)
-            
-            client.send(JSON.stringify({type:'updateCommentSecton',comments:[...putchNewComment],id:JSON.parse(data).id}))
-            
-
-         }else{
-            
-            console.log('leave')
-         }
-         if(JSON.parse(data).type=='openOnePost'){
-            
-            if (client === ws && client.readyState === Websocket.OPEN) {
-               let idOfOpendPost=JSON.parse(data).id
-               
-              client.send(JSON.stringify({...posts[idOfOpendPost],type:'showTitle'}));
-            }
-         }
-         if(JSON.parse(data).type=='openAllPosts'){
+         if(data.type=='openAllPosts'){
             
             if (client === ws && client.readyState === Websocket.OPEN) {
               client.send(JSON.stringify( posts));
             }
          }
-         if(JSON.parse(data).type=='leaveAcomment'){
-            
-            if (client === ws && client.readyState === Websocket.OPEN){
-               posts[JSON.parse(data).id].comments.push(JSON.parse(data).commentText)
-               console.log(JSON.parse(data).id)
-            }  
-            
-           
-
+         if (data.type=='uploadNewPost') {
+            console.log(sockets.length)
+            let newPost={id:posts.length,
+               title:data.postText,
+               comments:[],}
+               console.log(newPost)
+               posts.push(newPost)
+               putchSockets([newPost])
          }
+         console.log(sockets.length)
+         
+         
       }
          
 )};
 
-}
-         
-)
-*/
+
+})
 
 
 
 
- server.listen(3000,()=>console.log('listeningOmportc3000'))
+
+
+
+ server.listen(5000,()=>console.log('listeningOmportc3000'))
  // запускает сервер на localhost:3000
 
