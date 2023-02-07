@@ -11,7 +11,10 @@
 
     <form onsubmit="return mySubmitFunction(event)">
         <input
-        id="input"
+        id="userName"
+        type="text">
+        <input
+        id="userText"
         type="text">
         <button type="submit">subsecond</button>
       </form>
@@ -22,6 +25,19 @@
 
 
     <script>
+
+
+function getTime(){
+
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            return today = mm + '/' + dd + '/' + yyyy;
+
+
+}
         
 
     
@@ -30,7 +46,7 @@
     let parts = queryString.split('?')
     let id = parts[parts.length-1]
     console.log(id);
-    let soketUrl="ws://localhost:880"+id;
+    let soketUrl="ws://localhost:88"+id;
     
     
     
@@ -42,10 +58,14 @@ let socket = new WebSocket(soketUrl);
         socket.send(JSON.stringify({
             type:'openOnePost',
             id
-        }
-        
-    )
-    ) });
+        } 
+    ) )
+    socket.send(JSON.stringify({
+            type:'updateCommentSecton',
+            id
+        } 
+    ) )
+});
 
     setInterval(() => {
         socket.send(JSON.stringify({
@@ -81,16 +101,24 @@ socket.addEventListener('message',(e) =>{
     
     function mySubmitFunction(e) {
             e.preventDefault();
-            
-            let input =document.getElementById('input')
-            let commentText =input.value
-            if(input.value!=''){
+                        
+            let userName =document.getElementById('userName')
+            let userText =document.getElementById('userText')
+            let userNameVal =userName.value
+            let userTextVal =userText.value
+            if(userName.value!='' && userName.text!=''){
                 socket.send(JSON.stringify({
+                    timeStamp:getTime(),
                     type:'leaveAcomment',
                     id,
-                    commentText
-                }))
-                input.value='';
+                    userNameVal,
+                    userTextVal
+                })
+                
+                )
+                console.log(userNameVal+userTextVal)
+                userName.value='';
+                userText.value='';
             }
             return false;
     }

@@ -3,7 +3,12 @@
     {
      "id":0,
      "title":"Kst found black hole",
-     "comments":[]
+     "postText":"new text edited ",
+     "dataStamp":"2 november",
+     "likes":0,
+     "dislikes":0,
+     "comments":[],
+     "imgPath":"someImg"
     }
   ]
 }

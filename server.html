@@ -9,7 +9,10 @@
 <body>
     <form onsubmit="return mySubmitFunction(event)">
         <input
-        id="input"
+        id="title"
+        type="text">
+        <input
+        id="postText"
         type="text">
         <button type="submit">subsecond</button>
       </form>
@@ -18,20 +21,42 @@
       <script>
 
     let socket = new WebSocket("ws://localhost:8000/");
+
+    function getTime(){
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        return today = mm + '/' + dd + '/' + yyyy;
+
+
+}
+
         
     function mySubmitFunction(e) {
             e.preventDefault();
             
-            let input =document.getElementById('input')
-            let postText =input.value
+            let inputTitle =document.getElementById('title');
+            let title =inputTitle.value;
+            let inputText =document.getElementById('postText')
+            let postText =inputText.value
             
-            if(input.value!=''){
+            if(title!='' && postText!=''){
                 socket.send(JSON.stringify({
                     type:'uploadNewPost',
-                    postText
+                    title,
+                    postText,
+                    dataStamp:getTime(),
+                    likes:0,
+                    dislikes:0,
+                    comments:[]
                 }
                 ))
-                input.value='';
+                console.log(postText,title)
+                inputTitle.value='';
+                inputText.value='';
             }
             return false;
     }
