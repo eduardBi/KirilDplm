@@ -83,7 +83,7 @@ let sockets=[]
                   }
                   
                   
-                  client.send(JSON.stringify({type:'updateCommentSecton',comments:[...putchNewComment],id:data.id}))
+                  client.send(JSON.stringify({type:'updateCommentSecton',...post[data.id]}))
                   
                   
                }

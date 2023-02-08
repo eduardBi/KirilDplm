@@ -34,6 +34,7 @@
 socket.addEventListener('message',(e) =>{
     let data =JSON.parse(e.data);
     console.log(data)
+    if(data.type='getAllPOsts'){
     
           for (let i = 0; i < data.length; i++) {
               console.log(i)
@@ -41,6 +42,14 @@ socket.addEventListener('message',(e) =>{
               document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[i].title}</a>`
 
           }
+    }
+    if(data.type='updatePosts'){
+
+
+            
+
+
+    }
 
 })
 
