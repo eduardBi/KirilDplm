@@ -129,7 +129,7 @@ wss.on('connection',ws=>{
          if(data.type=='openAllPosts'){
             
             if (client === ws && client.readyState === Websocket.OPEN) {
-              client.send(JSON.stringify( posts));
+              client.send(JSON.stringify({payload:posts,type:'getAllPOsts'}));
             }
          }
          if (data.type=='uploadNewPost') {
@@ -138,7 +138,8 @@ wss.on('connection',ws=>{
             }
                posts.push(newPost)
                putchSockets([newPost])
-               console.log(posts)
+               client.send(JSON.stringify({payload:posts,type:'updatePosts'}));
+               
          }
          
          

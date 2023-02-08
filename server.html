@@ -20,6 +20,8 @@
 
       <script>
 
+        let posts=[];
+
     let socket = new WebSocket("ws://localhost:8000/");
     
     socket.addEventListener('open',(e) =>{
@@ -31,22 +33,36 @@
     )
 )});
 
+function updatePosts(data){
+    console.log(data);
+    console.log(posts)
+    for (let i = 0; i <data.length-posts.length; i++) {
+                console.log(i)
+                document.body.innerHTML+=data[posts.length+i].title
+                document.body.innerHTML+=data[posts.length+i].postText
+            }
+            
+            posts =data;
+            console.log(posts)
+
+
+}
+
 socket.addEventListener('message',(e) =>{
     let data =JSON.parse(e.data);
     console.log(data)
-    if(data.type='getAllPOsts'){
+    if(data.type=='getAllPOsts'){
     
-          for (let i = 0; i < data.length; i++) {
-              console.log(i)
+        
+        updatePosts(data.payload)
 
-              document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[i].title}</a>`
 
-          }
     }
-    if(data.type='updatePosts'){
+    if(data.type=='updatePosts'){
 
+        
+        updatePosts(data.payload)
 
-            
 
 
     }
