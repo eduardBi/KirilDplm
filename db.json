@@ -9,6 +9,26 @@
      "dislikes":0,
      "comments":[],
      "imgPath":"someImg"
-    }
+    },
+    {
+      "id":1,
+      "title":"Kst found black hole",
+      "postText":"new text edited ",
+      "dataStamp":"2/10/2022",
+      "likes":0,
+      "dislikes":0,
+      "comments":[],
+      "imgPath":"someImg"
+     },
+     {
+      "id":2,
+      "title":"Kst found black hole",
+      "postText":"new text edited ",
+      "dataStamp":"2/4/2022",
+      "likes":0,
+      "dislikes":0,
+      "comments":[],
+      "imgPath":"someImg"
+     }
   ]
 }

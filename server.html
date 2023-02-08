@@ -21,6 +21,28 @@
       <script>
 
     let socket = new WebSocket("ws://localhost:8000/");
+    
+    socket.addEventListener('open',(e) =>{
+        console.log('opend')
+ 
+        socket.send(JSON.stringify({
+            type:'openAllPosts',
+        }
+    )
+)});
+
+socket.addEventListener('message',(e) =>{
+    let data =JSON.parse(e.data);
+    console.log(data)
+    
+          for (let i = 0; i < data.length; i++) {
+              console.log(i)
+
+              document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[i].title}</a>`
+
+          }
+
+})
 
     function getTime(){
 

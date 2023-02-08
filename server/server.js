@@ -26,7 +26,11 @@ http.get('http://localhost:3000/data', res => {
     
     const postsFromserver = JSON.parse(Buffer.concat(data).toString());
     
-    posts.push(postsFromserver[0]);
+    posts.push(...postsFromserver);
+    
+    putchSockets(posts)
+    
+    
     
     
   });
@@ -39,29 +43,6 @@ http.get('http://localhost:3000/data', res => {
 
 
 
-posts.push(
-   {
-      "id":1,
-      "title":"Kst found black hole",
-      "postText":"new text edited ",
-      "dataStamp":"2/10/2022",
-      "likes":0,
-      "dislikes":0,
-      "comments":[],
-      "imgPath":"someImg"
-     },
-     {
-      "id":2,
-      "title":"Kst found black hole",
-      "postText":"new text edited ",
-      "dataStamp":"2/4/2022",
-      "likes":0,
-      "dislikes":0,
-      "comments":[],
-      "imgPath":"someImg"
-     },
-)
-
 
 
 
@@ -72,6 +53,8 @@ posts.push(
  
 let sockets=[]
  function putchSockets(post){
+   console.log('putching')
+   console.log(post)
    
    for (let i = 0; i < post.length; i++) {
       
@@ -84,6 +67,7 @@ let sockets=[]
          ws.onmessage = ({data}) => {
              data=JSON.parse(data);
             console.log(data);
+
              
              
              sockets[data.id].clients.forEach(function each(client) {
@@ -128,8 +112,9 @@ let sockets=[]
       )
       
    }
+   console.log(sockets.length)
 }
-putchSockets(posts)
+
 
  
  

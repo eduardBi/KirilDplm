@@ -79,8 +79,10 @@ let socket = new WebSocket(soketUrl);
 
 
 socket.addEventListener('message',(e) =>{
+
     
         let data=JSON.parse(e.data)
+        console.log(data)
         if(data.type=='updateCommentSecton'){
             comments=[...data.comments, ...comments];
             console.log(comments)
