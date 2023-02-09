@@ -25,8 +25,29 @@
 
 
     <script>
+/*
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+push comments
+
+
+
+
+*/
 function getTime(){
 
             var today = new Date();
@@ -46,6 +67,7 @@ function getTime(){
     let parts = queryString.split('?')
     let id = parts[parts.length-1]
     let soketUrl="ws://localhost:88"+id;
+    console.log(soketUrl)
     
     
     
@@ -54,6 +76,7 @@ let socket = new WebSocket(soketUrl);
 
 
     socket.addEventListener('open',(e) =>{
+        console.log('opend')
         socket.send(JSON.stringify({
             type:'openOnePost',
             id
@@ -66,23 +89,24 @@ let socket = new WebSocket(soketUrl);
     ) )
 });
 
+
     setInterval(() => {
-        console.log(comments);
+        
         socket.send(JSON.stringify({
                     type:'seeIfCommentsUpdates',
                     id,
                     nummerOfcomments:comments.length,
     }))
 
-}, 10000);
+}, 5000);
 
 
 function updateComments(data){
-    console.log(data.comments.length-comments.length)
+    console.log(data)
     for (let i = 0; i <data.comments.length-comments.length; i++) {
                 console.log(i)
                 document.body.innerHTML+=data.comments[comments.length+i].userNameVal
-                document.body.innerHTML+=data.comments[[comments.length+i]].userTextVal    
+                document.body.innerHTML+=data.comments[comments.length+i].userTextVal    
             }
             
             comments=data.comments;
@@ -93,7 +117,7 @@ function updateComments(data){
 
 socket.addEventListener('message',(e) =>{
         let data=JSON.parse(e.data)
-        
+        console.log(data);
         if(data.type=='updateCommentSecton'){
             
             updateComments(data)
@@ -102,8 +126,9 @@ socket.addEventListener('message',(e) =>{
         
         if(data.type=="showTitle"){
             console.log('suppose to show title')
-            console.log(data);            
             document.body.innerHTML+=data.title
+            document.body.innerHTML+=data.postText
+
             updateComments(data)
         
         }
@@ -127,7 +152,7 @@ socket.addEventListener('message',(e) =>{
                     type:'leaveAcomment',
                     id,
                     userNameVal,
-                    userTextVal
+                    userTextVal,
                 })
                 
                 )

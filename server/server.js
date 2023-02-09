@@ -3,6 +3,7 @@ const path=require('path');
 const wss= new Websocket.Server({port:8000});
 const express=require('express');
 const http=require('http');
+const { cpSync } = require('fs');
 const app=express();
 const server=require('http').createServer(app);
 
@@ -53,20 +54,20 @@ http.get('http://localhost:3000/data', res => {
  
 let sockets=[]
  function putchSockets(post){
-   console.log('putching')
-   console.log(post)
+   
    
    for (let i = 0; i < post.length; i++) {
       
    
       let socketUrl=880+post[i].id;
+      console.log(socketUrl)
       sockets[post[i].id]=new Websocket.Server({port:socketUrl});
 
       sockets[post[i].id].on('connection',ws=>{
 
          ws.onmessage = ({data}) => {
              data=JSON.parse(data);
-            console.log(data);
+            
 
              
              
@@ -83,7 +84,7 @@ let sockets=[]
                   }
                   
                   
-                  client.send(JSON.stringify({type:'updateCommentSecton',...post[data.id]}))
+                  client.send(JSON.stringify({...posts[data.id],type:'updateCommentSecton'}))
                   
                   
                }
@@ -98,8 +99,9 @@ let sockets=[]
                
                if(data.type=='leaveAcomment'){
                   if (client === ws && client.readyState === Websocket.OPEN){
+                     console.log(data)
                      posts[data.id].comments.push({...data,"imgPath":"someImg"})
-                     console.log(posts[data.id].comments);
+                     
                   }      
       
                }
@@ -123,8 +125,10 @@ let sockets=[]
 wss.on('connection',ws=>{
    
    ws.onmessage = ({data}) => {
+      data=JSON.parse(data);
+      
       wss.clients.forEach(function each(client) {
-         data=JSON.parse(data)
+         
          
          if(data.type=='openAllPosts'){
             
@@ -132,14 +136,34 @@ wss.on('connection',ws=>{
               client.send(JSON.stringify({payload:posts,type:'getAllPOsts'}));
             }
          }
+         
          if (data.type=='uploadNewPost') {
-            console.log(sockets.length)
+            
+            if (client === ws && client.readyState === Websocket.OPEN) {
+            
             let newPost={...data,id:posts.length,
             }
                posts.push(newPost)
                putchSockets([newPost])
-               client.send(JSON.stringify({payload:posts,type:'updatePosts'}));
                
+         }}
+         if(data.type=='seeIfPostsUpdates' && data.nummerOfPost!=posts.length){
+            
+            
+            if (client === ws && client.readyState === Websocket.OPEN) {       
+            let difference=posts.length-data.nummerOfPost
+            let putchNewPost=[];
+            for (let i = 0; i < difference ; i++) {
+
+               let indexOfNewPst=posts.length-i-1;
+               putchNewPost.push(posts[indexOfNewPst])
+               
+            }
+            client.send(JSON.stringify({type:'updatePOstSecton',payload:posts}))
+             
+            
+         }
+         
          }
          
          

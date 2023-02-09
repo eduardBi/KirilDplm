@@ -34,8 +34,7 @@
 )});
 
 function updatePosts(data){
-    console.log(data);
-    console.log(posts)
+    
     for (let i = 0; i <data.length-posts.length; i++) {
                 console.log(i)
                 document.body.innerHTML+=data[posts.length+i].title
@@ -47,24 +46,29 @@ function updatePosts(data){
 
 
 }
+setInterval(() => {
+    
+        socket.send(JSON.stringify({
+                    type:'seeIfPostsUpdates',
+                    nummerOfPost:posts.length,
+                
+    }))
+
+}, 5000);
 
 socket.addEventListener('message',(e) =>{
     let data =JSON.parse(e.data);
-    console.log(data)
+
     if(data.type=='getAllPOsts'){
     
         
         updatePosts(data.payload)
 
-
     }
-    if(data.type=='updatePosts'){
+    if(data.type=='updatePOstSecton'){
+        console.log(data)
 
-        
         updatePosts(data.payload)
-
-
-
     }
 
 })

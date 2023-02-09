@@ -17,24 +17,26 @@
     <script>
 
     let socket = new WebSocket("ws://localhost:8000/");
-
+    console.log(JSON.stringify({type:'openAllPosts'}))
+    console.log(JSON.stringify({type:'openAllPosts'}))
 
     socket.addEventListener('open',(e) =>{
-        console.log('opend')
+        
+        
  
         socket.send(JSON.stringify({
-            type:'openAllPosts',
-        }
+            type:'openAllPosts'
+            }
+        )
     )
-)});
+});
 socket.addEventListener('message',(e) =>{
     let data =JSON.parse(e.data);
     console.log(data)
     
-          for (let i = 0; i < data.length; i++) {
-              console.log(i)
+          for (let i = 0; i < data.payload.length; i++) {
 
-              document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[i].title}</a>`
+              document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data.payload[i].title}</a>`
 
           }
 
