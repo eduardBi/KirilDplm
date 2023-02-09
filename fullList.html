@@ -7,6 +7,118 @@
     <title>Document</title>
 </head>
 <body>
+    
+
+
+      <script>
+
+        let posts=[];
+
+    let socket = new WebSocket("ws://localhost:8000/");
+    
+    socket.addEventListener('open',(e) =>{
+        console.log('opend')
+ 
+        socket.send(JSON.stringify({
+            type:'openAllPosts',
+        }
+    )
+)});
+
+function updatePosts(data){
+    
+    for (let i = 0; i <data.length-posts.length; i++) {
+                
+                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[posts.length+i].title}</a>`
+                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[posts.length+i].postText}</a>`
+            }
+            
+            posts =data;
+            console.log(posts)
+
+
+}
+setInterval(() => {
+    
+        socket.send(JSON.stringify({
+                    type:'seeIfPostsUpdates',
+                    nummerOfPost:posts.length,
+                
+    }))
+
+}, 5000);
+
+socket.addEventListener('message',(e) =>{
+    let data =JSON.parse(e.data);
+
+    if(data.type=='getAllPOsts'){
+    
+        
+        updatePosts(data.payload)
+
+    }
+    if(data.type=='updatePOstSecton'){
+        console.log(data)
+
+        updatePosts(data.payload)
+    }
+
+})
+
+    function getTime(){
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        return today = mm + '/' + dd + '/' + yyyy;
+
+
+}
+
+        
+    function mySubmitFunction(e) {
+            e.preventDefault();
+            
+            let inputTitle =document.getElementById('title');
+            let title =inputTitle.value;
+            let inputText =document.getElementById('postText')
+            let postText =inputText.value
+            
+            if(title!='' && postText!=''){
+                socket.send(JSON.stringify({
+                    type:'uploadNewPost',
+                    title,
+                    postText,
+                    dataStamp:getTime(),
+                    likes:0,
+                    dislikes:0,
+                    comments:[]
+                }
+                ))
+                console.log(postText,title)
+                inputTitle.value='';
+                inputText.value='';
+            }
+            return false;
+    }
+
+      </script>
+
+</body>
+</html>
+
+<!--<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
 
     
 
