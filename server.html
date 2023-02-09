@@ -34,11 +34,12 @@
 )});
 
 function updatePosts(data){
+    console.log(data.length-posts.length)
     
     for (let i = 0; i <data.length-posts.length; i++) {
                 
-                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[posts.length+i].title}</a>`
-                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[posts.length+i].postText}</a>`
+                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${data[posts.length+i].id}">${data[posts.length+i].title}</a>`
+                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${data[posts.length+i].id}">${data[posts.length+i].postText}</a>`
             }
             
             posts =data;
