@@ -10,41 +10,8 @@
 </head>
 <body>
 
-    <div class="container">
-        <div class="card">
-          <div class="card__header">
-            <img src="https://source.unsplash.com/600x400/?computer" alt="card__image" class="card__image" width="600">
-          </div>
-          <div class="card__body">
-            <span class="tag tag-blue">Technology</span>
-            <h4>What's new in 2022 Tech</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem!</p>
-          </div>
-          <div class="card__footer">
-            <div class="user">
-              <h5>likes</h5>
-              <h5>comments</h5>
-              <small>disllakes</small>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-            <div class="card__header">
-              <img src="https://source.unsplash.com/600x400/?computer" alt="card__image" class="card__image" width="600">
-            </div>
-            <div class="card__body">
-              <span class="tag tag-blue">Technology</span>
-              <h4>What's new in 2022 Tech</h4>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem!</p>
-            </div>
-            <div class="card__footer">
-              <div class="user">
-                <h5>likes</h5>
-                <h5>comments</h5>
-                <small>disllakes</small>
-              </div>
-            </div>
-          </div>
+    <div class="container append">
+       
     </div>
     
 
@@ -76,11 +43,9 @@ function updatePosts(data){
     
     for (let i = 0; i <data.length-posts.length; i++) {
                 
-                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">a</a>`
-                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${1}</a>`
 
                 
-                let container=document.querySelector('.container');
+                let container=document.querySelector('.append');
                 let card = document.createElement('div');
                 card.className='card';
                 let cardHeader = document.createElement('div');
@@ -92,8 +57,9 @@ function updatePosts(data){
 
                 let cardBody=document.createElement('div');
                 cardBody.className='card__body'
-                let cardTitle=document.createElement('h4');
+                let cardTitle=document.createElement('a');
                 cardTitle.innerText=data[posts.length+i].title
+                cardTitle.href=`D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${data[i].id}`
                 let cardText=document.createElement('p');
                 cardText.innerText=data[posts.length+i].postText
                 cardBody.append(cardTitle)
