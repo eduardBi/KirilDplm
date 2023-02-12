@@ -5,8 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
+
+    <div class="container">
+        <div class="card">
+          <div class="card__header">
+            <img src="https://source.unsplash.com/600x400/?computer" alt="card__image" class="card__image" width="600">
+          </div>
+          <div class="card__body">
+            <span class="tag tag-blue">Technology</span>
+            <h4>What's new in 2022 Tech</h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem!</p>
+          </div>
+          <div class="card__footer">
+            <div class="user">
+              <h5>likes</h5>
+              <h5>comments</h5>
+              <small>disllakes</small>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+            <div class="card__header">
+              <img src="https://source.unsplash.com/600x400/?computer" alt="card__image" class="card__image" width="600">
+            </div>
+            <div class="card__body">
+              <span class="tag tag-blue">Technology</span>
+              <h4>What's new in 2022 Tech</h4>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem!</p>
+            </div>
+            <div class="card__footer">
+              <div class="user">
+                <h5>likes</h5>
+                <h5>comments</h5>
+                <small>disllakes</small>
+              </div>
+            </div>
+          </div>
+    </div>
     
 
 
@@ -25,12 +64,73 @@
     )
 )});
 
+
+
+
+
+
+
+                
+
 function updatePosts(data){
     
     for (let i = 0; i <data.length-posts.length; i++) {
                 
-                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[posts.length+i].title}</a>`
-                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${data[posts.length+i].postText}</a>`
+                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">a</a>`
+                document.body.innerHTML+=`<a href="D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${i}">${1}</a>`
+
+                
+                let container=document.querySelector('.container');
+                let card = document.createElement('div');
+                card.className='card';
+                let cardHeader = document.createElement('div');
+                cardHeader.className='card__header';
+                let img = document.createElement('img');
+                img.src='https://source.unsplash.com/600x400/?computer'
+                cardHeader.append(img)
+                card.prepend(cardHeader)
+
+                let cardBody=document.createElement('div');
+                cardBody.className='card__body'
+                let cardTitle=document.createElement('h4');
+                cardTitle.innerText=data[posts.length+i].title
+                let cardText=document.createElement('p');
+                cardText.innerText=data[posts.length+i].postText
+                cardBody.append(cardTitle)
+                cardBody.append(cardText)
+                card.append(cardBody)
+
+                let cardFooter=document.createElement('div');
+                cardFooter.className='card__footer'
+                let cardUser=document.createElement('div');
+                cardUser.className='user'
+                cardLikes=document.createElement('div')
+                cardLikes.innerText=data[posts.length+i].likes
+                cardComments=document.createElement('a')
+                cardComments.innerText=data[posts.length+i].title
+                cardDislikes=document.createElement('div')
+                cardDislikes.innerText=data[posts.length+i].dislikes
+                
+                cardUser.append(cardLikes)
+                cardUser.append(cardComments)
+                cardUser.append(cardDislikes)
+                cardFooter.append(cardUser)
+                
+                card.append(cardFooter)
+
+                cardDate=document.createElement('div');
+                cardDate.innerText=data[posts.length+i].dataStamp;
+                cardDate.className='date'
+                card.append(cardDate)
+
+
+                container.prepend(card)
+
+
+                
+
+                
+
             }
             
             posts =data;
@@ -77,32 +177,7 @@ socket.addEventListener('message',(e) =>{
 
 }
 
-        
-    function mySubmitFunction(e) {
-            e.preventDefault();
-            
-            let inputTitle =document.getElementById('title');
-            let title =inputTitle.value;
-            let inputText =document.getElementById('postText')
-            let postText =inputText.value
-            
-            if(title!='' && postText!=''){
-                socket.send(JSON.stringify({
-                    type:'uploadNewPost',
-                    title,
-                    postText,
-                    dataStamp:getTime(),
-                    likes:0,
-                    dislikes:0,
-                    comments:[]
-                }
-                ))
-                console.log(postText,title)
-                inputTitle.value='';
-                inputText.value='';
-            }
-            return false;
-    }
+     
 
       </script>
 
