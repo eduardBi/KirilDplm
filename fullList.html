@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/all.css">
 
 </head>
 <body>
+    
+    
 
     <div class="container append">
        
@@ -27,8 +30,8 @@
  
         socket.send(JSON.stringify({
             type:'openAllPosts',
-        }
-    )
+        })
+
 )});
 
 
@@ -71,11 +74,46 @@ function updatePosts(data){
                 let cardUser=document.createElement('div');
                 cardUser.className='user'
                 cardLikes=document.createElement('div')
-                cardLikes.innerText=data[posts.length+i].likes
+                cardLikes.innerHTML='<i class="fa-sharp fa-solid fa-thumbs-up" ></i>'
+
                 cardComments=document.createElement('a')
                 cardComments.innerText=data[posts.length+i].title
+
                 cardDislikes=document.createElement('div')
-                cardDislikes.innerText=data[posts.length+i].dislikes
+                cardDislikes.innerHTML='<i class="fa-solid fa-thumbs-down"></i>'
+                console.log(cardDislikes)
+    
+                cardLikes.children[0].setAttribute('data-id', posts.length+i)
+                cardLikes.setAttribute('data-isliked', false)
+
+                cardDislikes.children[0].setAttribute('data-disliked', false)
+                cardDislikes.setAttribute('data-id', posts.length+i )
+
+                cardDislikes.children[0].addEventListener('click',(e)=>{
+                    
+                    if(e.target.dataset.disliked=='false'){
+                        e.target.setAttribute('data-disliked','true')
+                        e.target.style.color='red'
+                    }else{
+                        e.target.setAttribute('data-disliked','false')
+                        e.target.style.color='blue'
+                    }
+                    
+                })
+
+                cardLikes.children[0].addEventListener('click',(e)=>{
+                    
+                    if(e.target.dataset.isliked=='false'){
+                        e.target.setAttribute('data-isliked','true')
+                        e.target.style.color='red'
+                    }else{
+                        e.target.setAttribute('data-isliked','false')
+                        e.target.style.color='blue'
+                    }
+                    
+                })
+
+
                 
                 cardUser.append(cardLikes)
                 cardUser.append(cardComments)
@@ -91,12 +129,6 @@ function updatePosts(data){
 
 
                 container.prepend(card)
-
-
-                
-
-                
-
             }
             
             posts =data;
