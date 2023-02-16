@@ -20,12 +20,45 @@
         type="text">
         <button type="submit">subsecond</button>
       </form>
+      
 
 
 
-    
+      
+    <div class="container append indiv">
+       
+    </div>
+    <div class="login-wrap indiv-comment" >
+        <div class="login-html">
+          <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">добавить новую информацию</label>
+          <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
+          <form class="login-form" onsubmit="return mySubmitFunction(event)">
+            <div class="sign-in-htm">
+              <div class="group">
+                <label for="user" class="label">название темы</label>
+                <input id="user" type="text"  class="input grab">
+              </div>
+              <div class="group">
+                <label for="pass" class="label">Текст</label>
+                <textarea id="postText"  type="password" class="input" data-type="password" name="" id="" cols="30" rows="10">
+                    
+                </textarea>
+              </div>
+              <div class="group">
+                
+              </div>
+              <div class="group">
+                <input type="submit" style="margin-top: 2.5rem ; cursor: pointer;" class="button" value="загрузить информацию">
+              </div>
+              <div class="hr"></div>
+              
+            </div>
+            
+        </form>
+        </div>
+      </div>
 
-
+      <script src="./updatePosts.js"></script>
     <script>
 /*
 
@@ -102,9 +135,13 @@ let socket = new WebSocket(soketUrl);
 
 }, 5000);
 
+let posts=[]
 
 function updateComments(data){
-    console.log(data)
+    let numberOfComments=arguments;
+    let changeElement=document.querySelector('.card__footer>.user>a')
+    changeElement.innerHTML=data.comments.length
+    
     for (let i = 0; i <data.comments.length-comments.length; i++) {
                 console.log(i)
                 document.body.innerHTML+=data.comments[comments.length+i].userNameVal
@@ -119,6 +156,7 @@ function updateComments(data){
 
 socket.addEventListener('message',(e) =>{
         let data=JSON.parse(e.data)
+        //posts.push(data)
         console.log(data);
         if(data.type=='updateCommentSecton'){
             
@@ -127,9 +165,11 @@ socket.addEventListener('message',(e) =>{
         }
         
         if(data.type=="showTitle"){
-            console.log('suppose to show title')
+            console.log(data)
+            updatePosts([data]);
             document.body.innerHTML+=data.title
             document.body.innerHTML+=data.postText
+
 
             updateComments(data)
         

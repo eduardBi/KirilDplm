@@ -71,8 +71,6 @@ function updatePosts(data){
 
                         posts[e.target.dataset.id].likes=false
                         posts[e.target.dataset.id].dislikes=true
-
-                        socket.send(JSON.stringify({type:'changeLikesAndDislikes',id:e.target.dataset.id,payload:posts[e.target.dataset.id]}))
                         
                         
                     }else{
@@ -80,6 +78,7 @@ function updatePosts(data){
                         e.target.style.color='gray'
                         posts[e.target.dataset.id].dislikes=false
                     }
+                    socket.send(JSON.stringify({type:'changeLikesAndDislikes',id:e.target.dataset.id,payload:posts[e.target.dataset.id]}))
                     
                 })
 
@@ -103,7 +102,8 @@ function updatePosts(data){
                         e.target.style.color='gray'
                         posts[e.target.dataset.id].likes=false
                     }
-                    console.log(posts)
+                    
+                    socket.send(JSON.stringify({type:'changeLikesAndDislikes',id:e.target.dataset.id,payload:posts[e.target.dataset.id]}))
                     
                 })
 

@@ -131,12 +131,15 @@ a{color:inherit;text-decoration:none}
 .login-wrap{
   width:100%;
   margin:auto;
+  border-radius: 2rem;
+  
   
   
   
   box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
 .login-html{
+  border-radius: 2rem;
   width:100%;
   height:100%;
   padding:90px 70px 50px 70px;
@@ -270,4 +273,89 @@ width: 100%;
 }
 .foot-lnk{
   text-align:center;
+}
+
+.indiv .card{
+
+  width: 90%;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+}
+.indiv img{
+
+  max-width: 400px;
+  width: 100%;
+
+}
+
+.indiv .card__footer{
+  padding: 2rem;
+  padding-bottom: 0rem;
+}
+.indiv-comment.login-wrap , .indiv-comment.login-wrap >*{
+  
+    width: 676px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  
+}
+.container.indiv{
+  margin-bottom: 0;
+  
+  
+  
+}
+.container.indiv .card{
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.indiv-comment label{
+    text-align: left !important;
+    
+    color: red;
+}
+.indiv-comment input , .indiv-comment textarea {
+  border-radius: 0 !important;
+}
+
+@media screen and (max-width: 768px)  { 
+  .indiv-comment.login-wrap {
+  
+    width: 90%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    max-width: 678px;
+  
+}
+ .indiv-comment.login-wrap >*{
+  width: 100%;
+  max-width: 678px;
+ }
+  
+  .indiv .card{
+
+    width: 90%;
+    flex-wrap: nowrap;
+    flex-direction: column;
+  
+  }
+  .indiv img{
+    max-width: 100%;
+    width: 100%;
+  
+  }
+}
+
+@media screen and (min-width: 600px)  { 
+
+  .indiv-comment.login-wrap, .indiv-comment.login-wrap>*{
+    width: 540px;
+  }
+}
+@media screen and (min-width: 770px)  { 
+
+  .indiv-comment.login-wrap, .indiv-comment.login-wrap>*{
+    width: 676px;
+  }
 }
