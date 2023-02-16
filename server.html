@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    
+    <link rel="stylesheet" href="css/all.css">
+
 
 </head>
 <body>
@@ -53,8 +54,8 @@
         
     </div>
 
-
-
+    
+<script src="./updatePosts.js"></script>
       <script>
 
         let posts=[];
@@ -70,68 +71,7 @@
     )
 )});
 
-function updatePosts(data){
-    console.log(data.length-posts.length)
-    
-    for (let i = 0; i <data.length-posts.length; i++) {
-                
-        
 
-                
-                let container=document.querySelector('.append');
-                let card = document.createElement('div');
-                card.className='card';
-                let cardHeader = document.createElement('div');
-                cardHeader.className='card__header';
-                let img = document.createElement('img');
-                img.src='https://source.unsplash.com/600x400/?computer'
-                cardHeader.append(img)
-                card.prepend(cardHeader)
-
-                let cardBody=document.createElement('div');
-                cardBody.className='card__body'
-                let cardTitle=document.createElement('a');
-                cardTitle.innerText=data[posts.length+i].title
-                cardTitle.href=`D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${data[i+posts.length].id}`
-                let cardText=document.createElement('p');
-                cardText.innerText=data[posts.length+i].postText
-                cardBody.append(cardTitle)
-                cardBody.append(cardText)
-                card.append(cardBody)
-
-                let cardFooter=document.createElement('div');
-                cardFooter.className='card__footer'
-                let cardUser=document.createElement('div');
-                cardUser.className='user'
-                cardLikes=document.createElement('div')
-                cardLikes.innerText=data[posts.length+i].likes
-                cardComments=document.createElement('a')
-                cardComments.innerText=data[posts.length+i].title
-                cardDislikes=document.createElement('div')
-                cardDislikes.innerText=data[posts.length+i].dislikes
-                
-                cardUser.append(cardLikes)
-                cardUser.append(cardComments)
-                cardUser.append(cardDislikes)
-                cardFooter.append(cardUser)
-                
-                card.append(cardFooter)
-
-                cardDate=document.createElement('div');
-                cardDate.innerText=data[posts.length+i].dataStamp;
-                cardDate.className='date'
-                card.append(cardDate)
-
-
-                container.prepend(card)
-
-            }
-            
-            posts =data;
-            console.log(posts)
-
-
-}
 setInterval(() => {
     
         socket.send(JSON.stringify({
@@ -152,7 +92,7 @@ socket.addEventListener('message',(e) =>{
 
     }
     if(data.type=='updatePOstSecton'){
-        console.log(data)
+        
 
         updatePosts(data.payload)
     }
@@ -191,8 +131,8 @@ socket.addEventListener('message',(e) =>{
                     title,
                     postText,
                     dataStamp:getTime(),
-                    likes:0,
-                    dislikes:0,
+                    likes:false,
+                    dislikes:false,
                     comments:[]
                 }
                 ))

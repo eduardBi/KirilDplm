@@ -129,7 +129,11 @@ wss.on('connection',ws=>{
       
       wss.clients.forEach(function each(client) {
          
-         
+         if(data.type=='changeLikesAndDislikes'){
+            
+            posts[data.id]=data.payload;
+            console.log(posts)
+         }
          if(data.type=='openAllPosts'){
             
             if (client === ws && client.readyState === Websocket.OPEN) {
