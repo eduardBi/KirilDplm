@@ -130,7 +130,7 @@ function updateComments(data){
                 imgWrap.className='img-wrap'
 
                 let userImg = document.createElement('img');
-                userImg.src='https://source.unsplash.com/600x400/?computer'
+                userImg.src=data.comments[i+comments.length].userPic
                 imgWrap.append(userImg)
 
                 let userData = document.createElement('div');
@@ -213,6 +213,7 @@ socket.addEventListener('message',(e) =>{
                     id,
                     userNameVal,
                     userTextVal,
+                    userPic:'./img/6.jpg'
                 })
                 
                 )

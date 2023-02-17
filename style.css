@@ -102,7 +102,7 @@ background: linear-gradient(to bottom, #ef473a, #cb2d3e);
 
 .card__footer {
   display: flex;
-  padding: 1rem;
+  padding: 1.5rem;
   margin-top: auto;
   width: 100%;
 }
@@ -287,10 +287,15 @@ hr{
   flex-direction: row;
 
 }
+img{
+  width: 100%;
+  height: 100%;
+}
 .indiv img{
 
   
   width: 100%;
+  
 
 }
 

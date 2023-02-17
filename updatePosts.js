@@ -13,7 +13,7 @@ function updatePosts(data){
                 let cardHeader = document.createElement('div');
                 cardHeader.className='card__header';
                 let img = document.createElement('img');
-                img.src='https://source.unsplash.com/600x400/?computer'
+                img.src=data[posts.length+i].imgPath
                 cardHeader.append(img)
                 card.prepend(cardHeader)
 
