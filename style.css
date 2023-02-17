@@ -41,7 +41,7 @@ img {
 .card {
   display: flex;
   flex-direction: column;
-  width: clamp(20rem, calc(20rem + 2vw), 22rem);
+  width: clamp(30rem, calc(20rem + 2vw), 22rem);
   overflow: hidden;
   box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
   border-radius: 1em;
@@ -59,7 +59,7 @@ background: linear-gradient(to right, #FFFFFF, #ECE9E6);
 
 
 .card__body {
-  padding: 1rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: .5rem;
@@ -289,7 +289,7 @@ hr{
 }
 .indiv img{
 
-  max-width: 350px;
+  
   width: 100%;
 
 }
@@ -300,7 +300,7 @@ hr{
 }
 .indiv-comment.login-wrap , .indiv-comment.login-wrap >*{
   
-    width: 676px;
+    width: 540px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   
@@ -342,6 +342,11 @@ hr{
   right: 0.5rem;
   
 }
+.card__header , .card__header img {
+  height: 200px;
+  width: 100%;
+
+}
 br{
   height: 1px;
   width: 100%;
@@ -362,6 +367,7 @@ br{
   display: flex;
   flex-direction: row;
   align-items: center;
+  
   
 }
 .user-data{
@@ -397,19 +403,24 @@ br{
   padding-bottom: 1rem ;
 }
 
+.indiv .card__footer{
+  display: none;
+}
 
 
 
-@media screen and (max-width: 768px)  { 
+
+@media screen and (max-width: 768px)  {
+  
   .img-wrap img{
     margin: 0 1rem;
   }
   .indiv-comment.login-wrap {
   
-    width: 90%;
+    width: 450px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    max-width: 678px;
+    
   
 }
 .users-comment{
@@ -420,7 +431,9 @@ br{
 }
 
 .comment-section{
-  width: 550px;  
+  width: 450px;  
+  
+  margin: 0 auto;
   
   
 }
@@ -431,11 +444,12 @@ br{
   
   .indiv .card{
 
-    width: 90%;
+    width: 450px;
     flex-wrap: nowrap;
     flex-direction: column;
   
   }
+  
   .indiv img{
     max-width: 100%;
     width: 100%;
@@ -445,17 +459,20 @@ br{
 
 
 
-@media screen and (min-width: 600px)  { 
+@media screen and (min-width: 600px)  {
   
-  
-  .indiv-comment.login-wrap, .indiv-comment.login-wrap>*{
-    width: 540px;
+
+  body{
+    font-size: 12px;
   }
+  
+  
+  
   
 }
 
 @media screen and (max-width: 600px)  { 
-  .comment-section{
+  .indiv.comment-section{
     width: 90%;  
   }
   
@@ -469,3 +486,21 @@ br{
   
 }
 
+@media screen and (max-width: 450px)  { 
+  .card , .indiv .card{
+    width: 300px;
+  }
+  
+  .indiv .login-html{
+      width: 300px !important;
+  }
+  
+  .login-wrap.indiv-comment{
+
+    width: 300px;
+    margin: 0 auto;
+  }
+.comment-section{
+  width: 300px;
+}
+}
