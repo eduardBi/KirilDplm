@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/all.css">
 
 </head>
 <body>
@@ -13,7 +14,7 @@
 
     
       
-
+<div class="central">
 
 
       
@@ -50,27 +51,10 @@
         </div>
       </div>
       <div class="comment-section">
-        <div class="users-comment">
-        <div class="img-wrap">
-            <img src="https://source.unsplash.com/600x400/?computer" alt="">
-        </div>
-        <div class="user-data">
-            <div class="user-name">
-                    nicole
-            </div>
-            <div class="user-text">
-                skd dsedjsed Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis repudiandae delectus officia ab, similique vitae consequatur pariatur nisi saepe ipsum aliquam accusantium. Illo fugiat asperiores, nobis pariatur beatae dicta facilis.
-            </div>
-
-        </div>
-        <div class="comment-data">
-            20/15/16
-        </div>
-     
-        </div>
+        
     
       </div>
-
+    </div>
       <script src="./updatePosts.js"></script>
     <script>
 function getTime(){
@@ -128,14 +112,14 @@ let socket = new WebSocket(soketUrl);
 let posts=[]
 
 function updateComments(data){
+    console.log(data.comments)
+    console.log('darta above')
     let numberOfComments=arguments;
     let changeElement=document.querySelector('.card__footer>.user>a')
-    changeElement.innerHTML=data.comments.length
+    changeElement.innerHTML='комментарии('+data.comments.length+")"
     
     for (let i = 0; i <data.comments.length-comments.length; i++) {
-                console.log(i)
-                document.body.innerHTML+=data.comments[comments.length+i].userNameVal
-                document.body.innerHTML+=data.comments[comments.length+i].userTextVal    
+                
 
                 
                 let wrapper=document.querySelector('.comment-section');
@@ -153,18 +137,21 @@ function updateComments(data){
                 userData.className='user-data'
                 let username = document.createElement('div');
                 username.classList='user-name'
-                username.innerHTML='ddesdesd'
+                username.innerHTML=data.comments[i+comments.length].userNameVal
 
                 let userText = document.createElement('div');
                 userText.classList='user-text'
-                userText.innerHTML='drfdrfdrfdrgdrg'
+                userText.innerHTML=data.comments[i+comments.length].userTextVal
+
 
                 userData.append(username)
                 userData.append(userText)
 
                 let commentData = document.createElement('div');
                 commentData.classList='comment-data'
-                commentData.innerHTML='15.78226'
+                commentData.innerHTML=data.comments[i+comments.length].timeStamp
+                
+                
 
 
                 userComment.append(imgWrap)
@@ -198,8 +185,7 @@ socket.addEventListener('message',(e) =>{
         if(data.type=="showTitle"){
             console.log(data)
             updatePosts([data]);
-            document.body.innerHTML+=data.title
-            document.body.innerHTML+=data.postText
+            
 
 
             updateComments(data)

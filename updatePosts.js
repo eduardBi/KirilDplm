@@ -39,7 +39,8 @@ function updatePosts(data){
                 cardLikes.innerHTML='<i class="fa-sharp fa-solid fa-thumbs-up" style="color:'+styleLikes+'" ></i>'
 
                 cardComments=document.createElement('a')
-                cardComments.innerText=data[posts.length+i].title
+                cardComments.href=`D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${data[i].id}`
+                cardComments.innerText="просмотреть коментарии"
 
                 let styleDislikes=data[posts.length+i].dislikes===true?
                 'black':'gray';

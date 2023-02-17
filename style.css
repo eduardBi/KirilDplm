@@ -29,6 +29,7 @@ a{
   max-width: 1200px;
   margin-block: 2rem;
   gap: 2rem;
+  
 }
 
 img {
@@ -265,8 +266,12 @@ width: 100%;
 .login-html .sign-up:checked + .tab + .login-form .sign-up-htm{
   transform:rotate(0);
 }
-
+hr{
+  width: 80%;
+  margin:  0 auto ;
+}
 .hr{
+  
   height:2px;
   margin:60px 0 50px 0;
   background:rgba(255,255,255,.2);
@@ -277,7 +282,7 @@ width: 100%;
 
 .indiv .card{
 
-  width: 90%;
+  width: 646px;
   flex-wrap: wrap;
   flex-direction: row;
 
@@ -362,11 +367,12 @@ br{
 .user-data{
   margin: 0 2rem  ;
   padding: 1rem;
+  
   width: 100%;
   
 }
 .user-name{
-  margin:  0.5rem 0;
+  
   font-weight: bold;
   text-align: center;
 }
@@ -387,11 +393,17 @@ br{
 
 }
 
+.central{
+  padding-bottom: 1rem ;
+}
 
 
 
 
 @media screen and (max-width: 768px)  { 
+  .img-wrap img{
+    margin: 0 1rem;
+  }
   .indiv-comment.login-wrap {
   
     width: 90%;
@@ -403,6 +415,10 @@ br{
 .users-comment{
     flex-direction: column;
 }
+.user-text{
+  text-align: center;
+}
+
 .comment-section{
   width: 550px;  
   
@@ -435,12 +451,14 @@ br{
   .indiv-comment.login-wrap, .indiv-comment.login-wrap>*{
     width: 540px;
   }
+  
 }
 
 @media screen and (max-width: 600px)  { 
   .comment-section{
     width: 90%;  
   }
+  
 
 }
 @media screen and (min-width: 770px)  { 
@@ -450,3 +468,4 @@ br{
   }
   
 }
+
