@@ -284,7 +284,7 @@ width: 100%;
 }
 .indiv img{
 
-  max-width: 400px;
+  max-width: 350px;
   width: 100%;
 
 }
@@ -310,14 +310,86 @@ width: 100%;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+.indiv-comment .login-html{
+  border-radius: 0;
+}
 .indiv-comment label{
     text-align: left !important;
     
-    color: red;
 }
 .indiv-comment input , .indiv-comment textarea {
   border-radius: 0 !important;
 }
+.login-form .group .button{
+  margin-bottom: 3rem;
+}
+
+.indiv-comment .login-html {
+  padding: 3rem;
+  padding-bottom: 0;
+}
+
+.comment-data{
+  margin-top: 1rem;
+  padding: 1rem;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  
+}
+br{
+  height: 1px;
+  width: 100%;
+  background: red;
+  
+}
+.comment-section{
+  background: #ECE9E6;
+  width: 646px;
+  
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+
+.users-comment{
+  padding: 2rem;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+}
+.user-data{
+  margin: 0 2rem  ;
+  padding: 1rem;
+  width: 100%;
+  
+}
+.user-name{
+  margin:  0.5rem 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.img-wrap{
+  margin-right: 2rem;
+  
+  height: 70px;
+  width: 70px;
+}
+
+.img-wrap img{
+  border-radius: 50%;
+  
+  margin: 0 2rem;
+  width: 100%;
+  height: 100%;
+
+}
+
+
+
+
 
 @media screen and (max-width: 768px)  { 
   .indiv-comment.login-wrap {
@@ -326,6 +398,14 @@ width: 100%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     max-width: 678px;
+  
+}
+.users-comment{
+    flex-direction: column;
+}
+.comment-section{
+  width: 550px;  
+  
   
 }
  .indiv-comment.login-wrap >*{
@@ -347,15 +427,26 @@ width: 100%;
   }
 }
 
-@media screen and (min-width: 600px)  { 
 
+
+@media screen and (min-width: 600px)  { 
+  
+  
   .indiv-comment.login-wrap, .indiv-comment.login-wrap>*{
     width: 540px;
   }
 }
+
+@media screen and (max-width: 600px)  { 
+  .comment-section{
+    width: 90%;  
+  }
+
+}
 @media screen and (min-width: 770px)  { 
 
   .indiv-comment.login-wrap, .indiv-comment.login-wrap>*{
-    width: 676px;
+    width: 646px;
   }
+  
 }

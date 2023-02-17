@@ -11,15 +11,7 @@
 <body>
 
 
-    <form onsubmit="return mySubmitFunction(event)">
-        <input
-        id="userName"
-        type="text">
-        <input
-        id="userText"
-        type="text">
-        <button type="submit">subsecond</button>
-      </form>
+    
       
 
 
@@ -30,17 +22,17 @@
     </div>
     <div class="login-wrap indiv-comment" >
         <div class="login-html">
-          <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">добавить новую информацию</label>
-          <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
+          <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">оставьте своё мнение</label>
+          <input id="tab-2" type="radio" name="tab"  class="sign-up"><label for="tab-2" class="tab"></label>
           <form class="login-form" onsubmit="return mySubmitFunction(event)">
             <div class="sign-in-htm">
               <div class="group">
-                <label for="user" class="label">название темы</label>
-                <input id="user" type="text"  class="input grab">
+                <label for="user" class="label">имя пользывателя</label>
+                <input id="userName" type="text"  class="input grab">
               </div>
               <div class="group">
                 <label for="pass" class="label">Текст</label>
-                <textarea id="postText"  type="password" class="input" data-type="password" name="" id="" cols="30" rows="10">
+                <textarea id="userText"  type="password" class="input" data-type="password" name="" id="" cols="30" rows="5">
                     
                 </textarea>
               </div>
@@ -48,41 +40,39 @@
                 
               </div>
               <div class="group">
-                <input type="submit" style="margin-top: 2.5rem ; cursor: pointer;" class="button" value="загрузить информацию">
+                <input type="submit" style="margin-top: 2.5rem ; cursor: pointer;" class="button" value="отправить комментарий">
               </div>
-              <div class="hr"></div>
+              
               
             </div>
             
         </form>
         </div>
       </div>
+      <div class="comment-section">
+        <div class="users-comment">
+        <div class="img-wrap">
+            <img src="https://source.unsplash.com/600x400/?computer" alt="">
+        </div>
+        <div class="user-data">
+            <div class="user-name">
+                    nicole
+            </div>
+            <div class="user-text">
+                skd dsedjsed Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis repudiandae delectus officia ab, similique vitae consequatur pariatur nisi saepe ipsum aliquam accusantium. Illo fugiat asperiores, nobis pariatur beatae dicta facilis.
+            </div>
+
+        </div>
+        <div class="comment-data">
+            20/15/16
+        </div>
+     
+        </div>
+    
+      </div>
 
       <script src="./updatePosts.js"></script>
     <script>
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-push comments
-
-
-
-
-*/
 function getTime(){
 
             var today = new Date();
@@ -146,6 +136,47 @@ function updateComments(data){
                 console.log(i)
                 document.body.innerHTML+=data.comments[comments.length+i].userNameVal
                 document.body.innerHTML+=data.comments[comments.length+i].userTextVal    
+
+                
+                let wrapper=document.querySelector('.comment-section');
+                let userComment = document.createElement('div');
+                userComment.className='users-comment';
+
+                let imgWrap = document.createElement('div');
+                imgWrap.className='img-wrap'
+
+                let userImg = document.createElement('img');
+                userImg.src='https://source.unsplash.com/600x400/?computer'
+                imgWrap.append(userImg)
+
+                let userData = document.createElement('div');
+                userData.className='user-data'
+                let username = document.createElement('div');
+                username.classList='user-name'
+                username.innerHTML='ddesdesd'
+
+                let userText = document.createElement('div');
+                userText.classList='user-text'
+                userText.innerHTML='drfdrfdrfdrgdrg'
+
+                userData.append(username)
+                userData.append(userText)
+
+                let commentData = document.createElement('div');
+                commentData.classList='comment-data'
+                commentData.innerHTML='15.78226'
+
+
+                userComment.append(imgWrap)
+                userComment.append(userData)
+                userComment.append(commentData)
+
+
+                wrapper.append(userComment)
+                let brake=document.createElement('hr')
+                wrapper.append(brake)
+                
+
             }
             
             comments=data.comments;
@@ -181,6 +212,7 @@ socket.addEventListener('message',(e) =>{
     let submit=document.querySelector('form')
     
     function mySubmitFunction(e) {
+            console.log('getSome')
             e.preventDefault();
                         
             let userName =document.getElementById('userName')
