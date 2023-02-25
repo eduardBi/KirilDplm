@@ -7,10 +7,12 @@ const { cpSync } = require('fs');
 const app=express();
 const server=require('http').createServer(app);
 
-let posts=[]
+let posts=[];
+let recivedPOstsFromServer=[]
  
 
-http.get('http://localhost:3000/data', res => {
+setInterval(() => {
+   http.get('http://localhost:3000/data', res => {
   let data = [];
   const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
   console.log('Status Code:', res.statusCode);
@@ -26,19 +28,30 @@ http.get('http://localhost:3000/data', res => {
   res.on('end', () => {
     
     const postsFromserver = JSON.parse(Buffer.concat(data).toString());
-    
-    posts.push(...postsFromserver);
-    
-    putchSockets(posts)
-    
-    
-    
+    let diff=postsFromserver.length-recivedPOstsFromServer.length
+    if(recivedPOstsFromServer.length!=postsFromserver.length && diff>0){
+      
+      for (let i = 0; i <diff;  i++) {
+
+         putchSockets([postsFromserver[postsFromserver.length-diff+i]])
+         posts.push(postsFromserver[postsFromserver.length-diff+i]);
+         
+      }
+
+      recivedPOstsFromServer=postsFromserver
+
+    }else{
+      console.log('diff')
+    }
     
   });
   
 }).on('error', err => {
   console.log('Error: ', err.message);
 });
+
+
+}, 5000);
 
 
 
@@ -54,11 +67,11 @@ http.get('http://localhost:3000/data', res => {
  
 let sockets=[]
  function putchSockets(post){
-   
+
    
    for (let i = 0; i < post.length; i++) {
       
-   
+      console.log('url')
       let socketUrl=880+post[i].id;
       console.log(socketUrl)
       sockets[post[i].id]=new Websocket.Server({port:socketUrl});
@@ -145,7 +158,7 @@ wss.on('connection',ws=>{
             
             if (client === ws && client.readyState === Websocket.OPEN) {
             
-            let newPost={...data,id:posts.length,
+            let newPost={...data,id:posts.length+20,
             }
                posts.push(newPost)
                putchSockets([newPost])

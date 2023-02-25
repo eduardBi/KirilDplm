@@ -3,8 +3,6 @@
 
 function updatePosts(data){
     
-    
-    
     for (let i = 0; i <data.length-posts.length; i++) {
                 
                 let container=document.querySelector('.append');
@@ -21,7 +19,7 @@ function updatePosts(data){
                 cardBody.className='card__body'
                 let cardTitle=document.createElement('a');
                 cardTitle.innerText=data[posts.length+i].title
-                cardTitle.href=`D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${data[i].id}`
+                cardTitle.href=`D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${data[posts.length+i].id}`
                 let cardText=document.createElement('p');
                 cardText.innerText=data[posts.length+i].postText
                 cardBody.append(cardTitle)
@@ -39,7 +37,7 @@ function updatePosts(data){
                 cardLikes.innerHTML='<i class="fa-sharp fa-solid fa-thumbs-up" style="color:'+styleLikes+'" ></i>'
 
                 cardComments=document.createElement('a')
-                cardComments.href=`D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${data[i].id}`
+                cardComments.href=`D:/programm/openserver/OSPanel/domains/kiriillDPLM/newIndividualPost.html?${data[posts.length+i].id}`
                 cardComments.innerText="просмотреть коментарии"
 
                 let styleDislikes=data[posts.length+i].dislikes===true?
